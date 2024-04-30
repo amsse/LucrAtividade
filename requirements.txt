@@ -3,7 +3,6 @@ anyio==4.3.0
 appdirs==1.4.4
 asttokens==2.4.1
 attrs==23.2.0
-bcc==0.18.0
 beautifulsoup4==4.12.3
 blinker==1.4
 Brlapi==0.8.3
