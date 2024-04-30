@@ -9,7 +9,7 @@ import datetime
 
 # Page Configuration:
 st.set_page_config(
-    page_title="Calculadora da Regra do 72",
+    page_title="Calculadoras do LucrAtividade",
     page_icon="💸",
     layout="centered",
     initial_sidebar_state="expanded")
@@ -81,7 +81,7 @@ def cs_sidebar():
 
 # Página:
 def cs_body():
-    st.title(':green[ProfitView]')
+    st.title(':green[LucrAtividade]')
     st.markdown('##### Calculadoras e Ferramentas')
     st.text('')
     st.text('')
