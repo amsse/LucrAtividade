@@ -95,9 +95,9 @@ def cs_sidebar():
     df_selic = ipea.timeseries('BM12_TJOVER12',yearGreaterThan=(current_year-1))
     df_selic.drop(['CODE', 'RAW DATE', 'DAY', 'MONTH', 'YEAR'], axis=1, inplace=True)
     st.sidebar.markdown("#### IPCA (Últ. 3m):")
-    st.sidebar.dataframe(df_ipca)
+    st.sidebar.dataframe(df_ipca.tail(3))
     st.sidebar.markdown("#### SELIC (Últ. 3m):")
-    st.sidebar.dataframe(df_selic)
+    st.sidebar.dataframe(df_selic.tail(3))
     st.sidebar.markdown('''<small>Made with ❤️ by [amsse](https://amsse.github.io/)</small>''', unsafe_allow_html=True)
     return None
 
