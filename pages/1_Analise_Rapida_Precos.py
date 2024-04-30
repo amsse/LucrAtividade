@@ -40,7 +40,7 @@ def high_low(ativo):
     dividendo_df = pd.DataFrame(dividendo)
     dividendo_df = dividendo_df.iloc[2:]
     rend_m_med_24 = dividendo_df[:24].mean()
-    rend_m_med_12 = dividendo_df[:12].mean()
+    rend_m_med_12 = dividendo_df.tail(12).mean()
     # presentation:
     st.success(ativo)
     col1, col2, col3 = st.columns(3)
