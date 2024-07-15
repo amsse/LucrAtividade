@@ -9,7 +9,7 @@ import datetime
 
 # Page Configuration:
 st.set_page_config(
-    page_title="Calculadoras do LucrAtividade",
+    page_title="Calculadora do LucrAtividade",
     page_icon="💸",
     layout="centered",
     initial_sidebar_state="expanded")
@@ -38,13 +38,22 @@ def calc_pm(qtd_anterior, preco_anterior, qtd_adicional, preco_adicional):
     st.subheader("O preço médio é: R$ " + pm)
 
 # Função de Cálculo do Custo Operacional:
-def custo_operacional(numero_acoes, custo_acoes):
-    taxa_b3 = 0.0003
-    taxa_IR = 0.00005
-    custo_aquisicao = numero_acoes * custo_acoes
-    custo_operacional = custo_aquisicao + ((custo_aquisicao*taxa_b3)+(custo_aquisicao*taxa_IR))
+def custo_operacional(numero_acoes, preco_compra):
+    taxas = 0.00035
+    custo_aquisicao = numero_acoes * preco_compra
+    custo_operacional = custo_aquisicao + (custo_aquisicao*taxas)
     custo_operacional = str(custo_operacional)
     st.subheader("O custo operacional total é: R$ " + custo_operacional)
+
+# Função de Cálculo de Ganho Real:
+def ganho_real(qtd_acoes, preco_compra, preco_venda):
+    taxas = 0.00035
+    custo_aquisicao = (qtd_acoes * preco_compra) + ((qtd_acoes*preco_compra)*taxas)
+    custo_liquidacao = (qtd_acoes * preco_venda) - ((qtd_acoes*preco_venda)*taxas)
+    if custo_liquidacao < custo_aquisicao:
+        st.subheader("Prejuízo de: " + str("{:.2f}".format(custo_aquisicao - custo_liquidacao)))
+    elif custo_liquidacao > custo_aquisicao:
+        st.subheader("Lucro de: " + str("{:.2f}".format(custo_liquidacao - custo_aquisicao)))
 
 # Função de Cálculo da Regra do 72:
 def regra_72(taxa_juros):
@@ -122,12 +131,26 @@ def cs_body():
                         por parte da B3 - totalizando uma alíquota de 0,03%.  
                         Além disso, há a incidência de IRPF retido na fonte, a uma alíquota de  
                         0,005%, sobre vendas comuns, ou de 1%, sobre ganhos em Day Trade.  
-                        A calculadora retornará o custo total da operação realizada. ''')
+                        A calculadora retornará o custo total da operação realizada, considerando
+                        as atividades como Swing Trade. ''')
         col1, col2 = st.columns(2)
         numero_acoes = col1.number_input('Número de Ações: ')
         custo_acoes = col2.number_input('Preço Médio das Ações: ')
         if st.button(':green[Calcular Custo Operacional]'):
             custo_operacional(numero_acoes, custo_acoes)
+
+    # Ganho Real:
+    with st.expander('💲 Calculadora de Ganho Real'):
+        with st.popover("?"):
+            st.markdown(''' Nas operações de compra e venda à vista de ações ou fundos, há a  
+                        incidência de taxas e tributos que totalizam 0,035%, para operações tidas
+                        como Swing Trade. ''')
+        col1, col2, col3 = st.columns(3)
+        qtd_acoes = col1.number_input('Quantidade de Ações: ')
+        preco_compra = col2.number_input('Preço de Aquisição das Ações: ')
+        preco_venda = col3.number_input('Preço de Venda das Ações: ')
+        if st.button(':green[Calcular Ganho Real]'):
+            ganho_real(qtd_acoes, preco_compra, preco_venda)
 
     # Regra do 72:
     with st.expander('🏦 Calculadora da Regra do 72'):
