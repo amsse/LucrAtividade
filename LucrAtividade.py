@@ -23,42 +23,34 @@ current_year = now.year
 
 
 # Funções:
+
 # Preços:
 def pricing():
-    col1, col2 = st.columns([0.7, 0.3], gap='large')
-    ativos = ['IMAB11.SA', 'NTNS11.SA', 'XFIX11.SA']
-    ativos_df = yfin.download(ativos, period='1mo')['Adj Close']
-    trend = (ativos_df / ativos_df.iloc[0] * 100).plot(figsize= (15,6))
-    col1.subheader(':blue[Tendência (6 Meses)]', divider='blue')
-    col1.pyplot(plt.gcf())
-    col2.subheader("💵  USD/BRL ➡️ R$ " + str("{:.3f}".format(yfin.Ticker("USDBRL=X").fast_info['last_price'])), divider='rainbow')
+    col1, col2 = st.columns(2)
+    col1.subheader("💵  USD/BRL ➡️ R$ " + str("{:.3f}".format(yfin.Ticker("USDBRL=X").fast_info['last_price'])), divider='green')
+    col1.markdown('# ')
+    col1.subheader("₿  BTC/USD ➡️ US$ " + str("{:.2f}".format(yfin.Ticker("BTC-USD").fast_info['last_price'])), divider='green')
+    col1.markdown('# ')
+    col2.subheader("🇺🇸🗽  IVV ➡️ US$ " + str("{:.2f}".format(yfin.Ticker("IVV").fast_info['last_price'])), divider='green')
     col2.markdown('# ')
-    col2.subheader("₿  BTC/USD ➡️ US$ " + str("{:.2f}".format(yfin.Ticker("BTC-USD").fast_info['last_price'])), divider='rainbow')
-    col2.markdown('# ')
-    col2.subheader("🇺🇸🗽  IVV ➡️ US$ " + str("{:.2f}".format(yfin.Ticker("IVV").fast_info['last_price'])), divider='rainbow')
-    col2.markdown('# ')
-    col2.subheader("🇺🇸🇧🇷  IVVB11 ➡️ R$ " + str("{:.2f}".format(yfin.Ticker("IVVB11.SA").fast_info['last_price'])), divider='rainbow')
+    col2.subheader("🇺🇸🇧🇷  IVVB11 ➡️ R$ " + str("{:.2f}".format(yfin.Ticker("IVVB11.SA").fast_info['last_price'])), divider='green')
 
-
-
-def main():
-    cs_sidebar()
-    cs_body()
-    return None
-
-
-
-# Sidebar:
-def cs_sidebar():
+# SELIC/IPCA:
+def rates():
+    col1, col2 = st.columns(2)
     df_ipca = ipea.timeseries('PRECOS12_IPCAG12',yearGreaterThan=(current_year-1))
     df_ipca.drop(['CODE', 'RAW DATE', 'DAY', 'MONTH', 'YEAR'], axis=1, inplace=True)
     df_selic = ipea.timeseries('BM12_TJOVER12',yearGreaterThan=(current_year-1))
     df_selic.drop(['CODE', 'RAW DATE', 'DAY', 'MONTH', 'YEAR'], axis=1, inplace=True)
-    st.sidebar.markdown("#### IPCA (Últ. 3m):")
-    st.sidebar.dataframe(df_ipca.tail(3))
-    st.sidebar.markdown("#### SELIC (Últ. 3m):")
-    st.sidebar.dataframe(df_selic.tail(3))
-    st.sidebar.markdown('''<small>Made with ❤️ by [amsse](https://amsse.github.io/)</small>''', unsafe_allow_html=True)
+    col1.markdown("#### IPCA (Últ. 3m):")
+    col1.dataframe(df_ipca.tail(3))
+    col2.markdown("#### SELIC (Últ. 3m):")
+    col2.dataframe(df_selic.tail(3))
+
+
+
+def main():
+    cs_body()
     return None
 
 
@@ -68,9 +60,15 @@ def cs_body():
     st.markdown('##### Bem-vindo à sua plataforma para análises rápidas de investimentos!')
     st.text('')
     st.text('')
-    st.text('')
-
     pricing()
+    st.text('')
+    st.text('')
+    rates()
+    st.text('')
+    st.text('')
+    st.text('')
+    st.text('')
+    st.markdown('''<small>Made with ❤️ by [amsse](https://amsse.github.io/)</small>''', unsafe_allow_html=True)
 
 
 
