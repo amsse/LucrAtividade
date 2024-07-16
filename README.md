@@ -1,2 +1,2 @@
 # LucrAtividade
-Aplicativo Streamlit voltado à análises superficiais de mercado e tendências.
+Aplicativo em Python com Streamlit. Voltado à análises superficiais de mercado e tendências.
