@@ -2,7 +2,6 @@ import streamlit as st
 import altair as alt
 import ipeadatapy as ipea
 import pandas as pd
-import time
 import datetime
 
 
@@ -12,7 +11,7 @@ st.set_page_config(
     page_title="Ferramentas do LucrAtividade",
     page_icon="💸",
     layout="centered",
-    initial_sidebar_state="expanded")
+    initial_sidebar_state="collapsed")
 alt.themes.enable("dark")
 now = datetime.datetime.now()
 current_year = now.year
