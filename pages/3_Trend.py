@@ -4,7 +4,6 @@ import pandas as pd
 import yfinance as yfin
 import ipeadatapy as ipea
 import matplotlib.pyplot as plt
-import time
 import datetime
 
 
@@ -67,7 +66,6 @@ def cs_body():
     st.text('')
     st.text('')
     st.text('')
-
     trend()
 
 
