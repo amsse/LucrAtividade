@@ -15,7 +15,7 @@ st.set_page_config(
     page_title="Análise Gráfica de Fundos do LucrAtividade",
     page_icon="💸",
     layout="wide",
-    initial_sidebar_state="expanded")
+    initial_sidebar_state="collapsed")
 alt.themes.enable("dark")
 now = datetime.datetime.now()
 current_year = now.year
@@ -82,7 +82,7 @@ def comp(ativo):
     ativos_curto.append(ativo)
     ativos_curto_df = yfin.download(ativos_curto, period='1mo')['Adj Close']
     trend_curto = (ativos_curto_df / ativos_curto_df.iloc[0] * 100).plot(figsize= (15,6))
-    col2.subheader(':blue[Tendência (6 Meses)]', divider='blue')
+    col2.subheader(':blue[Tendência (1 M)]', divider='blue')
     col2.pyplot(plt.gcf())
 
 
